@@ -1,0 +1,107 @@
+type Query{
+    accounts(filter: AccountFilter): [BankAccount]
+}
+
+input AccountFilter{
+    number: String
+    currency: String
+    accountType: AccountType
+}
+
+enum AccountType{
+    credit
+    depository
+    loan
+    investment
+    other
+}
+
+enum TransactionType{
+    CREDIT
+    DEBIT
+}
+
+type Transaction{
+    id: ID!
+    number: String!
+    date: String
+    typeCode: TransactionType
+    amount: Float
+    description: String
+    currency: String
+}
+
+type BankAccount{
+    id:ID!
+    accountType: AccountType
+    number:String!
+    currency: String
+    type: AccountType
+    name: String
+    officialName: String
+    owners: [Owner]
+    balance: Balance
+    transactions: [Transaction]
+    profile: User
+    offers: [Offer]
+}
+
+type User{
+    id:ID!
+    userId:String
+    name: String
+    openDate: String
+}
+
+type Owner{
+    userId: String
+    addresses: [Address]
+    emails: [Email]
+    names: [String]
+    phoneNumbers: [Phone]
+}
+
+type Address{
+    city: String
+    country: String
+    postalCode: String
+    region: String
+    street: String
+    primary: Boolean!
+}
+
+type Email{
+    address: String
+    primary: Boolean
+    type: String
+}
+
+type Phone{
+    number: String
+    primary: Boolean
+    type: String
+}
+
+type Balance{
+    number: String
+    available: Float
+    current: Float
+    iso_currency_code: String
+    limit: String
+    dateTime: String
+}
+
+type Offer{
+    id: ID!
+    offerName: String
+    offerType: String
+    status: Boolean
+    promoCode: String
+    offerKey: String
+    offerDetails: OfferDetails
+}
+type OfferDetails{
+    id: ID!
+    createdOn: String
+    validTill: String
+}
